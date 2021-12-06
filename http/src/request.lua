@@ -1,12 +1,13 @@
 local Main = script.Parent.Parent
 local Lib = Main.lib
 local Src = Main.src
+local Packages = Main.Parent
 ---------------------------------------------------
 
 local httpservice = game:GetService("HttpService")
 
 local Url = require(Lib.url)
-local Promise = require(Lib.promise)
+local Promise = require(Packages.Promise)
 
 local json = require(Src.json)
 local Response = require(Src.response)

@@ -1,3 +1,10 @@
+Packages/*
+!Packages/.robloxrc
+
+rotriever.lock
+*.rbxmx
+*.rbxm
+
 rojo.json
 site/
 web/robloxrequests/
