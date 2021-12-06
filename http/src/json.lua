@@ -10,5 +10,4 @@ local function dec(s)
 	return httpservice:JSONDecode(s)
 end
 
-
-return {["enc"] = enc, ["dec"] = dec}
+return { ["enc"] = enc, ["dec"] = dec }

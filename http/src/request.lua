@@ -19,7 +19,6 @@ local Cache = require(Src.cache)
 
 ---------------------------------------------------
 
-
 -- Request object
 
 local Request = {}
@@ -29,12 +28,12 @@ function Request.new(method, url, opts)
 	--  method: (str) HTTP Method
 	--     url: (str) Fully qualified URL
 	-- options (dictionary):
-		-- headers: (dictionary) Headers to send with request
-		--   query: (dictionary) Query string parameters
-		--    data: (str OR dictionary) Data to send in POST or PATCH request
-		--     log: (bool) Whether to log the request
-		-- cookies: (CookieJar OR dict) Cookies to use in request
-		-- ignore_ratelimit: (bool) If true, rate limiting is ignored. Not recommended unless you are rate limiting yourself.
+	-- headers: (dictionary) Headers to send with request
+	--   query: (dictionary) Query string parameters
+	--    data: (str OR dictionary) Data to send in POST or PATCH request
+	--     log: (bool) Whether to log the request
+	-- cookies: (CookieJar OR dict) Cookies to use in request
+	-- ignore_ratelimit: (bool) If true, rate limiting is ignored. Not recommended unless you are rate limiting yourself.
 
 	local self = setmetatable({}, Request)
 
@@ -50,7 +49,7 @@ function Request.new(method, url, opts)
 	self.query = {}
 	self.data = nil
 
-	self._ratelimits = {RateLimiter.get("http", 250, 30)}
+	self._ratelimits = { RateLimiter.get("http", 250, 30) }
 
 	self.ignore_ratelimit = opts.ignore_ratelimit or false
 
@@ -63,7 +62,7 @@ function Request.new(method, url, opts)
 	-- handle cookies
 
 	local cj = opts.cookies or {}
-	if not cj.__cookiejar then  -- check if CookieJar was passed. if not, convert to CookieJar
+	if not cj.__cookiejar then -- check if CookieJar was passed. if not, convert to CookieJar
 		local jar = CookieJar.new()
 
 		if cj then
@@ -80,12 +79,10 @@ function Request.new(method, url, opts)
 
 	self._callback = nil
 
-
 	self._log = (opts.log == nil and true) or opts.log
 
 	return self
 end
-
 
 function Request:set_headers(headers)
 	-- headers: (dictionary) additional headers to set
@@ -98,7 +95,6 @@ function Request:set_headers(headers)
 end
 Request.update_headers = Util.deprecate(Request.set_headers, "0.5", "update_headers")
 
-
 function Request:set_query(params)
 	-- params: (dictionary) additional query string parameters to set
 
@@ -106,12 +102,11 @@ function Request:set_query(params)
 		self.query[k] = v
 	end
 
-	self.url:setQuery(self.query)  -- update url
+	self.url:setQuery(self.query) -- update url
 
 	return self
 end
 Request.update_query = Util.deprecate(Request.set_headers, "0.5", "update_query")
-
 
 function Request:set_data(data)
 	-- sets request data (string or table)
@@ -148,7 +143,7 @@ function Request:_send()
 	local options = {
 		["Url"] = self.url:build(),
 		Method = self.method,
-		Headers = self.headers
+		Headers = self.headers,
 	}
 
 	if self.data ~= nil then
@@ -157,14 +152,14 @@ function Request:_send()
 
 	local trimmed_url = options.Url:sub(-1, -1) == "/" and options.Url:sub(1, -2) or options.Url
 
-	local unique_id =  ("Request_%s_%s_%s"):format(self.method, trimmed_url, options.Body or "")
+	local unique_id = ("Request_%s_%s_%s"):format(self.method, trimmed_url, options.Body or "")
 
 	if self.method:upper() == "GET" and Cache.is_cached(options.Url, unique_id) then
 		local st = tick()
 		local data, cache_type = Cache.get_cached(options.Url, unique_id)
 
 		if st - data.timestamp <= Cache.get_expire(options.Url) then
-			local resp = Response.new(self, data, tick()-st)
+			local resp = Response.new(self, data, tick() - st)
 			resp.from_cache = true
 
 			print("[http]", cache_type:upper(), "CACHE |", resp.method, resp.url)
@@ -181,7 +176,7 @@ function Request:_send()
 			local st = tick()
 
 			raw_response = httpservice:RequestAsync(options)
-			resp = Response.new(self, raw_response, tick()-st)
+			resp = Response.new(self, raw_response, tick() - st)
 			self.timestamp = st
 			succ = true
 			break
@@ -198,7 +193,7 @@ function Request:_send()
 	end
 
 	if self._log then
-		local rl = tostring(math.floor(self._ratelimits[#self._ratelimits]:consumption()*1000)*0.1) .. "%"
+		local rl = tostring(math.floor(self._ratelimits[#self._ratelimits]:consumption() * 1000) * 0.1) .. "%"
 
 		print("[http]", resp.code, resp.message, "|", resp.method, resp.url, "(", rl, "ratelimit )")
 	end
@@ -214,7 +209,6 @@ function Request:_send()
 	return resp
 end
 
-
 function Request:send(promise)
 	-- send request via HTTPService and return Response object
 
@@ -225,14 +219,14 @@ function Request:send(promise)
 			local ok, result = pcall(self._send, self)
 
 			local succ = ok and result.ok
-	
+
 			if succ then
 				resolve(result)
 			else
 				if ok then
-					reject({request_sent=true, response=result})
+					reject({ request_sent = true, response = result })
 				else
-					reject({request_sent=false, error=result})
+					reject({ request_sent = false, error = result })
 				end
 			end
 		end)

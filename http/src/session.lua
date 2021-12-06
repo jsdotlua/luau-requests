@@ -15,7 +15,7 @@ local Util = require(Src.util)
 local function randomString(l)
 	local s = ""
 
-	for _=1, l do
+	for _ = 1, l do
 		s = s .. string.char(math.random(97, 122))
 	end
 
@@ -49,7 +49,6 @@ function Session.new(base_url)
 	return self
 end
 
-
 function Session:set_ratelimit(rate, window)
 	if not rate then
 		self:disable_ratelimit()
@@ -73,7 +72,7 @@ function Session:disable_ratelimit()
 
 	if self._ratelimit then
 		RateLimiter.ratelimit[self._ratelimit.id] = nil
-		self._ratelimit=  nil
+		self._ratelimit = nil
 	end
 end
 
@@ -111,11 +110,11 @@ function Session:Request(method, url, opts)
 		log = will_log,
 		cookies = opts.cookies or self.cookies,
 		ignore_ratelimit = opts.ignore_ratelimit or self.ignore_ratelimit,
-		no_stats = self.no_stats or false
+		no_stats = self.no_stats or false,
 	})
 
 	if self._ratelimit then
-		table.insert(request._ratelimits, self._ratelimit)  -- make request follow session ratelimit
+		table.insert(request._ratelimits, self._ratelimit) -- make request follow session ratelimit
 	end
 
 	request:set_headers(opts.headers or {})
@@ -134,11 +133,11 @@ function Session:request(method, url, opts)
 	--  method: (str) HTTP Method
 	--     url: (str) Fully qualified URL
 	-- options (dictionary):
-		-- headers: (dictionary) Headers to send with request
-		--   query: (dictionary) Query string parameters
-		--    data: (str OR dictionary) Data to send in POST or PATCH request
-		--     log: (bool) Whether to log the request
-		-- cookies: (CookieJar OR dict) Cookies to use in request
+	-- headers: (dictionary) Headers to send with request
+	--   query: (dictionary) Query string parameters
+	--    data: (str OR dictionary) Data to send in POST or PATCH request
+	--     log: (bool) Whether to log the request
+	-- cookies: (CookieJar OR dict) Cookies to use in request
 
 	opts = opts or {}
 
@@ -158,7 +157,7 @@ end
 Session.promise_send = Util.deprecate(Session.promise_request, "0.5", "Session:promise_send")
 
 -- create quick functions for each http method
-for _, method in pairs({"GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE", "PATCH"}) do
+for _, method in pairs({ "GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE", "PATCH" }) do
 	Session[method:lower()] = function(self, url, opts)
 		return self:send(method, url, opts)
 	end
