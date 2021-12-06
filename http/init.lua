@@ -13,6 +13,7 @@ local Session = require(Src.session)
 local Forms = require(Src.form)
 local RateLimiter = require(Src.ratelimit)
 local Util = require(Src.util)
+local createFetch = require(Src.fetch)
 
 ------------------------------------------
 
@@ -56,6 +57,8 @@ function http.promise_request(method, url, opts)
 	return req:send(true)
 end
 http.promise_send = Util.deprecate(http.promise_request, "0.5", "http.promise_send")
+
+http.fetch = createFetch(http.promise_request)
 
 -- create quick functions for each http method
 for _, method in pairs({"GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE", "PATCH"}) do
