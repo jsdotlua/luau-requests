@@ -16,7 +16,7 @@ local b64 = require(Lib.b64)
 local function randomString(l)
 	local s = ""
 
-	for _=1, l do
+	for _ = 1, l do
 		s = s .. string.char(math.random(97, 122))
 	end
 
@@ -40,7 +40,7 @@ function File.new(...)
 	self.content = ""
 	self.content_type = nil
 
-	local args = {...}
+	local args = { ... }
 	if #args == 1 then
 		-- File(content)
 
@@ -72,7 +72,6 @@ function File:__tostring()
 	return ("File('%s', '%s')"):format(self.name, self.content_type)
 end
 
-
 -- FormData object
 
 local FormData = {}
@@ -102,13 +101,13 @@ function FormData:AddField(name, value)
 
 	table.insert(self.fields, {
 		Name = name,
-		Value = value
+		Value = value,
 	})
 end
 
 function FormData:build()
 	-- return request payload data for these form values
-	
+
 	local content = ""
 
 	if self.content_type == "application/x-www-form-urlencoded" then
@@ -140,7 +139,7 @@ function FormData:build()
 		end
 	else
 		for _, field in pairs(self.fields) do
-			content = content .. "--"..self.boundary.."\r\n"
+			content = content .. "--" .. self.boundary .. "\r\n"
 
 			local val = field.Value
 
@@ -162,7 +161,7 @@ function FormData:build()
 
 			content = content .. "\r\n\r\n" .. val .. "\r\n"
 		end
-		content = content .. "--"..self.boundary.."--"
+		content = content .. "--" .. self.boundary .. "--"
 	end
 
 	return content
@@ -171,5 +170,5 @@ end
 ---------------
 return {
 	["FormData"] = FormData,
-	["File"] = File
+	["File"] = File,
 }

@@ -1,17 +1,6 @@
 {
-  "name": "roblox-requests",
+  "name": "RobloxRequests",
   "tree": {
-    "$className": "DataModel",
-
-    "ReplicatedStorage": {
-      "$className": "ReplicatedStorage",
-
-      "http": {
-        "$path": "http"
-      },
-      "TestEZ": {
-        "$path": "testez-master/src"
-      }
-    }
+    "$path": "http"
   }
 }

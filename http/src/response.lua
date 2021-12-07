@@ -11,7 +11,7 @@ local CookieJar = require(Src.cookies)
 
 -----------------------------------------------------
 
-local html_types = {"text/html", "application/xhtml+xml"}
+local html_types = { "text/html", "application/xhtml+xml" }
 
 -- Response Object
 
@@ -22,7 +22,7 @@ function Response.new(req, resp, rt)
 
 	local self = setmetatable({}, Response)
 
-	self.request = req  -- original request object
+	self.request = req -- original request object
 
 	self.response_time = rt
 	self.timestamp = self.request.timestamp
@@ -32,16 +32,16 @@ function Response.new(req, resp, rt)
 	self.method = req.method
 
 	-- response data
-	self.code = resp.StatusCode  -- deprecated
+	self.code = resp.StatusCode -- deprecated
 	self.status_code = resp.StatusCode
 
-	self.success = resp.Success  -- deprecated
+	self.success = resp.Success -- deprecated
 	self.ok = self.status_code >= 200 and self.status_code < 300
-	
+
 	self.message = resp.StatusMessage
 	self.headers = CaseInsensitive(resp.Headers)
 
-	self.content = resp.Body  -- deprecated
+	self.content = resp.Body -- deprecated
 	self.text = resp.Body
 
 	self.headers["content-type"] = self.headers["content-type"] or "text/plain"
@@ -52,9 +52,8 @@ function Response.new(req, resp, rt)
 	local type_encoding = self.headers["content-type"]:split(";")
 	self.content_type = type_encoding[1]:lower()
 	self.encoding = (type_encoding[2] and type_encoding[2]:split("=")[2]) or "" -- or "utf-8"
-	
-	self.content_length = #(self.text)
-	
+
+	self.content_length = #self.text
 
 	-- cookies
 	self.cookies = CookieJar.new()
@@ -66,9 +65,7 @@ function Response.new(req, resp, rt)
 	return self
 end
 
-function Response:expand()
-
-end
+function Response:expand() end
 
 function Response:__tostring()
 	return self.text

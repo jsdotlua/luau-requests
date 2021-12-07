@@ -19,7 +19,7 @@ end
 
 local function trim(s)
 	s = s or ""
-	
+
 	while s:sub(1, 1) == " " do
 		s = s:sub(2)
 	end
@@ -59,7 +59,7 @@ function Cookie.fromSet(s)
 	local nv = args[1]:split("=")
 	local name, value = trim(nv[1]), trim(nv[2])
 
-	for i=2, #args do
+	for i = 2, #args do
 		local kv = args[i]:split("=")
 		local k, v = trim(kv[1]):lower(), trim(kv[2])
 
@@ -78,7 +78,7 @@ function Cookie:matches(url)
 
 	local u = Url.parse(url)
 
-	if self.domain:sub(1, 1) == "." then  -- wildcard domain
+	if self.domain:sub(1, 1) == "." then -- wildcard domain
 		if not (u.host:sub(-#self.domain, -1) == self.domain or u.host == self.domain:sub(2)) then
 			return false
 		end
@@ -104,7 +104,7 @@ CookieJar.__index = CookieJar
 function CookieJar.new()
 	local self = setmetatable({}, CookieJar)
 
-	self.__cookiejar = true  -- used to differentiate from dictionaries
+	self.__cookiejar = true -- used to differentiate from dictionaries
 
 	self.cookies = {}
 
@@ -149,6 +149,5 @@ end
 function CookieJar:__tostring()
 	return json.enc(self.domains)
 end
-
 
 return CookieJar

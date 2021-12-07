@@ -1,0 +1,23 @@
+{
+  "name": "RobloxRequestsTestModel",
+  "tree": {
+    "$className": "DataModel",
+
+    "HttpService": {
+      "$className": "HttpService",
+      "$properties": {
+        "HttpEnabled": true
+      }
+    },
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Packages": {
+        "$path": "Packages",
+        "RobloxRequests": {
+          "$path": "http"
+        }
+      }
+    }
+  }
+  
+}
