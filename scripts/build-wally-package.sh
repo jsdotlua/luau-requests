@@ -2,33 +2,30 @@
 
 set -e
 
-rm -rf roblox/node_modules
+rm -rf roblox
 
 mkdir -p roblox
 
-cp -rL node_modules/ roblox/
+cp -r http roblox/http
 
-./scripts/remove-tests.sh roblox/node_modules
-
-rm -rf build/wally
-
-module_name=luau-requests
-
-echo Process package $module_name
+./scripts/remove-tests.sh roblox
 
 wally_package=build/wally
-roblox_package=roblox
+rm -rf $wally_package
+
+echo Process package
 
 mkdir -p $wally_package
 cp LICENSE $wally_package/LICENSE
+
+node ./scripts/npm-to-wally.js package.json $wally_package/wally.toml roblox/wally-package.project.json
+
+cp .darklua-wally.json roblox
+cp -r node_modules/.luau-aliases/* roblox
+
+rojo sourcemap roblox/wally-package.project.json --output roblox/sourcemap.json
+
+darklua process --config roblox/.darklua-wally.json roblox/http $wally_package/http
+
 cp default.project.json $wally_package
-node ./scripts/npm-to-wally.js package.json $wally_package/wally.toml $roblox_package/wally-package.project.json
-
-cp .darklua-wally.json $roblox_package
-cp -r roblox/node_modules/.luau-aliases/* $roblox_package
-
-rojo sourcemap $roblox_package/wally-package.project.json --output $roblox_package/sourcemap.json
-
-darklua process --config $roblox_package/.darklua-wally.json $roblox_package/http $wally_package/http
-
 wally package --project-path $wally_package --list
