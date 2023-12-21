@@ -1,14 +1,8 @@
 -- Sessions
-
-local Main = script.Parent.Parent
-local Lib = Main.lib
-local Src = Main.src
----------------------------------
-
-local Request = require(Src.request)
-local CookieJar = require(Src.cookies)
-local RateLimiter = require(Src.ratelimit)
-local Util = require(Src.util)
+local Request = require("./request")
+local CookieJar = require("./cookies")
+local RateLimiter = require("./ratelimit")
+local Util = require("./util")
 
 -- util
 

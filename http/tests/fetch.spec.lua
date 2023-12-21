@@ -1,16 +1,14 @@
 return function ()
-    local Packages = script.Parent.Parent.Parent
-
-    local JestGlobals = require(Packages.Dev.JestGlobals)
+    local JestGlobals = (require)("@pkg/@jsdotlua/jest-globals")
     local jestExpect = JestGlobals.expect
 
-    local http = require(script.Parent.Parent)
-    local Promise = require(script.Parent.Parent.Parent.Promise)
+    local http = require("../init")
+    local Promise = require("@pkg/@jsdotlua/promise")
 
     describe("fetch", function()
         it("should GET", function()
             local resultPromise = http.fetch("https://github.com/")
-            
+
             jestExpect(resultPromise).toBeDefined()
             jestExpect(Promise.is(resultPromise)).toBe(true)
 

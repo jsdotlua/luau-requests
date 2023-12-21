@@ -1,0 +1,9 @@
+{
+  "name": "RobloxRequests",
+  "tree": {
+    "$path": "http",
+    "node_modules": {
+      "$path": "node_modules"
+    }
+  }
+}

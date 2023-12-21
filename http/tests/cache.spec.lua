@@ -1,6 +1,6 @@
 return function()
-    local http = require(script.Parent.Parent)
-    local cache = require(script.Parent.Parent.src.cache)
+    local http = require("../init")
+    local cache = require("../src/cache")
 
     describe("update_settings", function()
         it("should update the settings table", function()
@@ -40,7 +40,7 @@ return function()
             http.cache.cache_locally("github.com")
 
             http.get("https://github.com/")
-            
+
             local resp = http.get("https://github.com")
 
             expect(resp.from_cache).to.equal(true)
@@ -48,7 +48,7 @@ return function()
 
         it("should respect expire times", function()
             http.cache.update_settings("scratch.mit.edu", {expires=5})
-            
+
             http.get("https://scratch.mit.edu")
 
             local resp0 = http.get("https://scratch.mit.edu")

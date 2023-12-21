@@ -1,21 +1,15 @@
-local Main = script.Parent.Parent
-local Lib = Main.lib
-local Src = Main.src
-local Packages = Main.Parent
----------------------------------------------------
-
 local httpservice = game:GetService("HttpService")
 
-local Url = require(Lib.url)
-local Promise = require(Packages.Promise)
+local Url = require("../lib/url")
+local Promise = require("@pkg/@jsdotlua/promise")
 
-local json = require(Src.json)
-local Response = require(Src.response)
-local CookieJar = require(Src.cookies)
-local RateLimiter = require(Src.ratelimit)
-local Util = require(Src.util)
+local json = require("./json")
+local Response = require("./response")
+local CookieJar = require("./cookies")
+local RateLimiter = require("./ratelimit")
+local Util = require("./util")
 
-local Cache = require(Src.cache)
+local Cache = require("./cache")
 
 ---------------------------------------------------
 

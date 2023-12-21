@@ -1,13 +1,8 @@
-local Main = script.Parent.Parent
-local Lib = Main.lib
-local Src = Main.src
------------------------------------------------------
+local CaseInsensitive = require("../lib/nocasetable")
+local html = require("../lib/html")
 
-local CaseInsensitive = require(Lib.nocasetable)
-local html = require(Lib.html)
-
-local json = require(Src.json)
-local CookieJar = require(Src.cookies)
+local json = require("./json")
+local CookieJar = require("./cookies")
 
 -----------------------------------------------------
 
