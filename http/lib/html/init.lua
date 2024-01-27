@@ -29,12 +29,12 @@ local prn = opts.silent and noop or function(l, f, ...)
     print('[HTMLParser]' .. t .. f:format(...) .. (opts.nonl or "\n"))
 end
 
-local err = opts.noerr and noop or function(f, ...) 
-	prn("e", f, ...) 
+local err = opts.noerr and noop or function(f, ...)
+	prn("e", f, ...)
 end
 
 local out = opts.noout and noop or function(f, ...)
-	prn("i", f, ...) 
+	prn("i", f, ...)
 end
 local line = noop
 local dbg = opts.debug and
@@ -44,8 +44,8 @@ local dbg = opts.debug and
 -- }}}
 
 -- Requires {{{
-local ElementNode = require(script.ElementNode)
-local voidelements = require(script.voidelements)
+local ElementNode = require('./ElementNode')
+local voidelements = require('./voidelements')
 -- }}}
 
 local HtmlParser = {}
@@ -65,7 +65,7 @@ local function parse(text, limit, page_url) -- {{{
         text = text:gsub("<!%-%-.-%-%->", "") -- Many chances commented code will have syntax errors, that'll lead to parser failures
     end -- }}}
 
-    
+
     local tpr = {}
 
     if not opts.keep_danger_placeholders then -- {{{ little speedup by cost of potential parsing breakages

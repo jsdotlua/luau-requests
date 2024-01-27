@@ -1,19 +1,14 @@
 -- HTTP Module by Patrick Dill
 -- based on Python Requests (python-requests.org)
 
-local Lib = script.lib
-local Src = script.src
+local html = require("./lib/html")
 
-------------------------------------------
-
-local html = require(Lib.html)
-
-local Request = require(Src.request)
-local Session = require(Src.session)
-local Forms = require(Src.form)
-local RateLimiter = require(Src.ratelimit)
-local Util = require(Src.util)
-local createFetch = require(Src.fetch)
+local Request = require("./src/request")
+local Session = require("./src/session")
+local Forms = require("./src/form")
+local RateLimiter = require("./src/ratelimit")
+local Util = require("./src/util")
+local createFetch = require("./src/fetch")
 
 ------------------------------------------
 
@@ -27,7 +22,7 @@ http.Session = Session.new
 http.FormData = Forms.FormData.new
 http.File = Forms.File.new
 
-http.cache = require(Src.cache)
+http.cache = require("./src/cache")
 
 function http.request(method, url, opts)
 	-- quick method to send http requests

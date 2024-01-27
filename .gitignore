@@ -5,9 +5,14 @@ rotriever.lock
 *.rbxmx
 *.rbxm
 
+**/sourcemap.json
+**/node_modules
+/build
+/roblox
+.yarn
+
 rojo.json
 site/
 web/robloxrequests/
 .vscode
 .VSCodeCounter/
-testez-master/

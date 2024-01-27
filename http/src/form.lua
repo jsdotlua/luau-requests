@@ -1,15 +1,10 @@
 -- form data module --
 ----------------------
 
-local Main = script.Parent.Parent
-local Lib = Main.lib
-local Src = Main.src
----------------------------------
-
 local httpservice = game:GetService("HttpService")
 
-local MIME = require(Lib.mimetypes)
-local b64 = require(Lib.b64)
+local MIME = require("../lib/mimetypes")
+local b64 = require("../lib/b64")
 
 --
 

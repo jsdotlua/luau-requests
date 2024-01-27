@@ -1,1 +1,13 @@
-std = "roblox"
+std = "selene_definitions"
+
+[config]
+
+[rules]
+multiple_statements = "allow"
+parenthese_conditions = "allow"
+shadowing = "allow"
+unused_variable = "allow"
+if_same_then_else = "allow"
+
+undefined_variable = "allow"
+mismatched_arg_count = "allow"

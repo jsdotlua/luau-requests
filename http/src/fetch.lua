@@ -1,12 +1,8 @@
-local Main = script.Parent.Parent
-local Packages = Main.Parent
----------------------------------------------------
-
-local Promise = require(Packages.Promise)
+local Promise = require('@pkg/@jsdotlua/promise')
 
 ---------------------------------------------------
 
-function createFetch(promise_request)
+local function createFetch(promise_request)
 	local function fetch(url, options)
 		if options == nil then
 			options = {}
